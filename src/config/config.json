@@ -1,0 +1,11 @@
+{
+    "database": {
+        "host": "localhost",
+        "user": "root",
+        "password": "admin",
+        "database": "integrador1"
+    },
+    "server": {
+        "port": 8080
+    }
+}

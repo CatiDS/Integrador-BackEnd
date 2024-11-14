@@ -1,0 +1,122 @@
+RESERVA:*************************************************************************************************************************************
+MOSTAR TODAS LAS RESERVAS:  get
+http://localhost:8080/reserva/   
+
+CREAR RESERVA:      post
+http://localhost:8080/reserva/      
+recibo del front el body                             
+
+{
+    "fecha_res": "",
+    "usuario_res": "",
+    "nombre": "",
+    "apellido": "",
+    "nro_tel": ,
+    "cant_personas":
+}
+
+MODIFICAR RESERVA:   put
+http://localhost:8080/reserva/:id_reserva  
+recibo del front (req.params.id_reserva,req.body)
+{
+	"fecha_res": "",
+    "apellido": "",
+    "nombre": "",
+    "nro_tel": ,
+    "cant_personas": 
+}        ****VER SI QUIERO QUE ACTUALICE LA FECHA DE MODIFICACION*****
+
+CANCELAR RESERVA: delete 
+http://localhost:8080/reserva/cancelar/:id_reserva 
+recibo del front id_reserva (eq.params.id_reserva)
+
+FINALIZAR RESERVA: put
+http://localhost:8080/reserva/finalizar/:id_reserva 
+recibo del front id_reserva (req.params.id_reserva)
+
+BUSCAR POR ID DE USUARIO:   get
+http://localhost:8080/reserva/buscar/:id_usuario 
+recibo del front id_usuario (req.params.id_usuario)
+
+BUSCAR POR APELLIDO:   get    
+http://localhost:8080/reserva/buscar/apellido/:apellido 
+recibo del front apellido (req.params.apellido)      
+
+BUSCAR POR NRO TELEFONO:    get
+http://localhost:8080/reserva/buscar/telefono/:nro_tel      
+recibo del front nro_tel (req.params.nro_telg)                      
+
+  
+
+**********************************************************************************************************************************************
+MESA:
+CREAR MESA:  post
+http://localhost:8080/mesa/             /mesa/
+{
+    "nro_mesa": ,
+    "lugares": 
+}
+
+LISTAR MESAS: get 
+http://localhost:8080/mesa/             /mesa/
+
+
+
+
+*************************************************************************************************************************************
+USUARIO:
+CREAR USUARIO: post
+http://localhost:8080/usuario/   
+recibo del front body
+{
+    
+    "apellido": "",
+    "nombre": "",
+    "mail": "",
+    "pass": "",
+    "nro_tel": 
+}
+
+LISTAR USUARIO: get
+http://localhost:8080/usuario/
+
+
+MODIFICAR USUARIO:  put
+http://localhost:8080/usuario/:id_usuario
+recibo del front id_usuario, body  (req.params.id_usuario, req.body)
+
+{
+    "apellido":"",
+    "nombre": "",
+    "mail": "",
+    "pass": "", 
+    "nro_tel": 
+}
+
+ELIMINAR USUARIO:  delete
+http://localhost:8080/usuario/:id_usuario
+recibo del front id_usuario a eliminar (req.params.id_usuario)
+
+BUSCAR POR id_usuario: get
+http://localhost:8080/usuario/id/:id_usuario
+recibo del front id_usuario (req.params.id_usuario)
+
+BUSCAR POR MAIL: get
+http://localhost:8080/usuario/mail/:mail
+recibo del front mail  ( req.params.mail)
+
+MODIFICAR ROL: put
+http://localhost:8080/usuario/rol/:id_usuario
+recibo del front id_usuario, nuevo rol ingresado.  (req.params.id_usuario, req.body)
+
+LOGIN:  post
+http://localhost:8080/usuario/login
+recibo del front mail, pass   en el body
+  const { mail, pass } = req.body;
+
+{
+  "mail":"cati@gmail.com",
+  "pass": "clave1234"
+}
+
+
