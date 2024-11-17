@@ -5,6 +5,13 @@ const app = express();
 var cors = require('cors');
 app.use(cors());
 
+// const sitesEnabled = {
+//     origin: ['https://localhost:5173','https://tasty-sloths-remain.loca.lt'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+// }
+
+// app.use(cors(sitesEnabled))
+
 var morgan = require('morgan')
 app.use(morgan('common'));
 
@@ -27,7 +34,7 @@ app.use('/usuario', usuarioController);
 app.use('/reserva', reservaController);
 app.use("/mesa", mesaController); //ejemplo de peticion --> https://localhost:8080/mesa/crear_mesa
 // app.use("/producto", productoController); //ejemplo de peticion --> https://localhost:8080/producto/listar_productos
-// app.use("/cuentaPorMesa", cuentaPorMesaController);
+app.use("/cuentaPorMesa", cuentaPorMesaController);
 // app.use("/productoPorCuenta", productoPorCuentaController);
 
 

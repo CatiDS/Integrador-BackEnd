@@ -51,14 +51,42 @@ recibo del front nro_tel (req.params.nro_telg)
 **********************************************************************************************************************************************
 MESA:
 CREAR MESA:  post
-http://localhost:8080/mesa/             /mesa/
+http://localhost:8080/mesa/
+recibo del front (req.body) con los datos
 {
     "nro_mesa": ,
     "lugares": 
 }
 
 LISTAR MESAS: get 
-http://localhost:8080/mesa/             /mesa/
+http://localhost:8080/mesa/  
+
+MODIFICAR MESA: put
+http://localhost:8080/mesa/modificar/:id_mesa
+recibo del front (req.params.id_mesa,req.body) id_mesa , body con cambios
+{
+    "nro_mesa": ,
+    "lugares": ,
+    "disponible": ""
+}
+
+ELIMINAR MESA: delete
+http://localhost:8080/mesa/eliminar/:id_mesa
+recibo del front (req.params.id_mesa) id_mesa a eliminar 
+
+CAMBIAR ESTADO DE LA DISPONIBILIDAD:  put
+http://localhost:8080/mesa/cambiareEstado/:id_mesa
+recibo del front (req.body, id) el id_mesa a cambiar y en el req.body.disponible "si" o "no"
+
+{
+    "disponible": "si"
+}
+
+BUSCAR POR NUMERO DE MESA:
+http://localhost:8080/mesa/buscar/:nro_mesa
+recibo del front (req.params.nro_mesa) nro_mesa
+
+
 
 
 
@@ -120,3 +148,10 @@ recibo del front mail, pass   en el body
 }
 
 
+
+
+
+
+localtunnel 
+pag: https://busy-lamps-ring.loca.lt/
+pas: 45.228.189.133
