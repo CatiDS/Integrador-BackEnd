@@ -51,6 +51,14 @@ create table cuenta_mesa (
     foreign key (mesa) references mesa(id_mesa)
 );
 
+create table mesa_x_cuenta (
+	id_mxc int auto_increment primary key,
+    cuenta int not null,
+    mesa int not null,
+    foreign key (mesa) references mesa(id_mesa),
+    foreign key (cuenta) references cuenta_mesa(id_cuenta)
+);
+
 create table prod_x_cuenta (
 	id_pxc int auto_increment primary key,
     cuenta int not null,

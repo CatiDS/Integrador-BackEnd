@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 const usuarioController = require('./src/controller/usuarioController');
 const reservaController = require('./src/controller/reservaController');
 const mesaController = require('./src/controller/mesaController');
-const cuentaMesaController = require('./src/controller/cuentaMesaController');
+const cuentaMesaController = require('./src/controller/cuentaController');
 // const productoController = require('./src/controller/productoController');
 // const productoPorCuentaController = require('./src/controller/productoPorCuentaController');
 

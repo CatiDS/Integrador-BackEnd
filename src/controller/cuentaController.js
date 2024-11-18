@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-var model = require('./../model/cuentaMesaModel');
+var model = require('./../model/cuentaModel');
 // var modelmesa = require('./../model/mesaModel');
 
 
