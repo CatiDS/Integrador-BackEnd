@@ -40,10 +40,10 @@ create table producto (
     stock int (4) unsigned default (0)   
 );
 
-create table cuenta_mesa (
+create table cuenta (
 	id_cuenta int auto_increment primary key,
     fecha_hora timestamp default current_timestamp,
-    reserva int ,
+    reserva int unique ,
     mesa int not null,
     total decimal (9,2) unsigned default(0),
 	pago enum ('no','si') not null,

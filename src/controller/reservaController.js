@@ -3,13 +3,14 @@ const router = express.Router();
 
 var model = require('./../model/reservaModel');
 
+const { validate, personaRules } = require('../middleware/validations.js');
 
 // ---------------------------------------------------------- 
-// -- rutas de escucha (endpoint) dispoibles para RESERVAS -- 
+// -- rutas de escucha (endpoint) dispoibles -- 
 // ---------------------------------------------------------- 
+router.post('/',personaRules(), validate ,crear);
 router.get('/', mostarTodo);
-router.post('/', crear);
-router.put('/:id_reserva', modificar);
+router.put('/:id_reserva',personaRules(), validate, modificar);
 router.delete('/cancelar/:id_reserva', cancelar);
 router.put('/finalizar/:id_reserva', finalizar);
 router.get('/buscar/:id_usuario', buscarPorIdUsuario);
@@ -21,14 +22,6 @@ router.get('/buscar/telefono/:nro_tel', buscarPorNroTel);
 // --------- funciones utilizadas por el router ------------- 
 // ----------------------------------------------------------
 
-async function mostarTodo(req, res) {
-    try {
-        const reservas = await model.mostarTodo();
-        res.status(200).json(reservas);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-}
 
 async function crear(req, res) {
     try {
@@ -36,6 +29,15 @@ async function crear(req, res) {
         res.status(201).json(nueva_reserva);
     } catch (error) {
         res.status(500).send(error.message)
+    }
+}
+
+async function mostarTodo(req, res) {
+    try {
+        const reservas = await model.mostarTodo();
+        res.status(200).json(reservas);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 }
 

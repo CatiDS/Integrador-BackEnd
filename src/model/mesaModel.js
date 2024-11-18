@@ -64,21 +64,18 @@ metodos = {
         }
     },
 
-
-    cancelarMesa: async function (id) {
+    eliminarMesa: async function (id) {
         try {
             const consulta = `delete from mesa WHERE id_mesa = ?`;
             const [result] = await db.execute(consulta, [id]);
-            console.log(result.affectedRows);
-            console.log(id);
             if (result.affectedRows === 0) {
                 const error = new Error(`No se encontro una mesa con el id_mesa: ${id}`);
                 error.statusCode = 404;
                 throw error;
             }
-            return { message: 'Exito al cancelar la mesa', detalle: result };
+            return { message: 'Exito al eliminar la mesa', detalle: result };
         } catch (error) {
-            throw new Error('Error al cancelar la mesa: ' + error.message);
+            throw new Error('Error al eliminar la mesa: ' + error.message);
         }
     },
 
@@ -86,8 +83,6 @@ metodos = {
         try {
             const consulta = `update mesa set disponible = "si" where id_mesa = ?`;
             const [result] = await db.execute(consulta, [id]);
-            console.log(result.affectedRows);
-            console.log(id);
             if (result.affectedRows === 0) {
                 const error = new Error(`que no se ha encontrado la mesa con el id: ${id} `);
                 error.statusCode = 404;
@@ -106,7 +101,7 @@ metodos = {
 
     noDisponible: async function (id) {
         try {
-            const consulta = `update mesa set disponible = "no" where nro_mesa = ?`;
+            const consulta = `update mesa set disponible = "si" where nro_mesa = ?`;
             const [result] = await db.execute(consulta, [id]);
             if (result.affectedRows === 0) {
                 const error = new Error(`que no se ha encontrado la mesa con el id: ${id} `);
@@ -128,12 +123,11 @@ metodos = {
         try {
             const consulta = `select * from mesa where nro_mesa = ? `;
             const [result] = await db.execute(consulta, [id]);
-            if (result == "") {
+            if (result.length == 0) {
                 const error = new Error(`No existe la mesa: ${id}. `);
                 error.statusCode = 404;
                 throw error;
             }
-            console.log(result);
             return { message: `Exito al listar la mesa: ${id}`, detail: result }
         } catch (error) {
             throw new Error('Error al listar: ' + error.message);
@@ -144,13 +138,17 @@ metodos = {
         const consulta = `select * from mesa where disponible = "si"`;
         try {
             const [result] = await db.execute(consulta);
+            if (result.length == 0) {
+                const error = new Error(`No se encontraron mesas disponobles. `);
+                error.statusCode = 404;
+                throw error;
+            }
             return { message: 'Exito al listar mesas: ', detail: result }
         } catch (error) {
             throw new Error('Error al listar mesas: ' + error.message);
         }
 
     }
-
 }
 module.exports = metodos;
 // model vehiculo se encargara de conectarse a la base de datos y devolver informacion al controller.

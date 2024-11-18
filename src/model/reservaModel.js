@@ -2,20 +2,7 @@ const db = require('../config/config_database');
 
 metodos = {
 
-    mostarTodo: async function () {
-        try {
-            const consulta = `select reserva.id_reserva, concat (reserva.apellido,", ", reserva.nombre) as nombre_cliente, 
-            reserva.fecha_res as fecha_reserva, reserva.nro_tel, reserva.cant_personas , reserva.estado, 
-            concat (usuario.apellido,", ", usuario.nombre) as nombre_usuario,  reserva.fecha_hoy as fecha_carga
-            from usuario inner join reserva on( usuario.id_usuario = reserva.usuario_res) order by nombre_cliente ;`
-            const [result] = await db.execute(consulta);
-            return { message: 'Exito al listar reservas', detail: result }
-        } catch (error) {
-            throw new Error('Error al listar reservas: ' + error.message);
-        }
-    },
-
-    crear: async function (datos) {
+     crear: async function (datos) {
         try {
             const params = [datos.fecha_res, datos.usuario_res, datos.apellido, datos.nombre, datos.nro_tel, datos.cant_personas];
             const consulta = `insert into reserva ( fecha_res, usuario_res , apellido , nombre, nro_tel, cant_personas)
@@ -33,6 +20,19 @@ metodos = {
                 } else {
                     throw new Error('No se pudo realizar la reserva debido a: ' + error);
                 }
+        }
+    },
+
+    mostarTodo: async function () {
+        try {
+            const consulta = `select reserva.id_reserva, reserva.apellido, reserva.nombre, 
+            reserva.fecha_res, reserva.nro_tel, reserva.cant_personas , reserva.estado, 
+            usuario.apellido, usuario.nombre, reserva.fecha_hoy as fecha_carga
+            from usuario inner join reserva on( usuario.id_usuario = reserva.usuario_res);`
+            const [result] = await db.execute(consulta);
+            return { message: 'Exito al listar reservas', detail: result }
+        } catch (error) {
+            throw new Error('Error al listar reservas: ' + error.message);
         }
     },
 
@@ -68,8 +68,6 @@ metodos = {
         try {
             const consulta = `delete from reserva WHERE id_reserva = ?`;
             const [result] = await db.execute(consulta, [deTalReserva]);
-            console.log(result.affectedRows);
-            console.log(deTalReserva);
             if (result.affectedRows === 0) {
                 const error = new Error(`No se encontro una reserva con el id_reserva: ${deTalReserva}`);
                 error.statusCode = 404;
@@ -86,8 +84,6 @@ metodos = {
         try {
             const consulta = `update reserva set estado = 'finalizada' where id_reserva = ?`;
             const [result] = await db.execute(consulta, [deTalReserva]);
-            console.log(result.affectedRows);
-            console.log(deTalReserva);
             if (result.affectedRows === 0) {
                 const error = new Error(`que no se ha encontrado la reserva con el id: ${deTalReserva} `);
                 error.statusCode = 404;
@@ -106,18 +102,17 @@ metodos = {
 
     buscarPorId: async function (id) {
         try {
-            const consulta = `select reserva.id_reserva, concat (reserva.apellido,", ", reserva.nombre) as nombre_cliente, 
-            reserva.fecha_res as fecha_reserva, reserva.nro_tel, reserva.cant_personas , reserva.estado, 
-            concat (usuario.apellido,", ", usuario.nombre) as nombre_usuario,  reserva.fecha_hoy as fecha_carga
+            const consulta = `select reserva.id_reserva, reserva.apellido, reserva.nombre, 
+            reserva.fecha_res , reserva.nro_tel, reserva.cant_personas , reserva.estado, 
+            usuario.apellido, usuario.nombre,  reserva.fecha_hoy as fecha_carga
             from usuario inner join reserva on( usuario.id_usuario = reserva.usuario_res) 
-            where usuario.id_usuario= ?`;
+            where usuario.id_usuario= ?`; 
             const [result] = await db.execute(consulta, [id]);
-            if (result == "") {
+            if (result.length == 0) {
                 const error = new Error(`El usuario con el id: ${id} no tiene reservas, o no existe. `);
                 error.statusCode = 404;
                 throw error;
             }
-            console.log(result);
             return { message: `Exito al listar reservas del usuario: ${id}`, detail: result }
         } catch (error) {
             throw new Error('Error al listar reservas: ' + error.message);
@@ -126,13 +121,13 @@ metodos = {
 
     buscarPorPersona: async function (apellido) {
         try {
-            const consulta = `select reserva.id_reserva, concat (reserva.apellido,", ", reserva.nombre) as nombre_cliente, 
-            reserva.fecha_res as fecha_reserva, reserva.nro_tel, reserva.cant_personas , 
-            concat (usuario.apellido,", ", usuario.nombre) as nombre_usuario,  reserva.fecha_hoy as fecha_carga
+            const consulta = `select reserva.id_reserva, reserva.apellido, reserva.nombre, 
+            reserva.fecha_res, reserva.nro_tel, reserva.cant_personas , 
+            usuario.apellido, usuario.nombre,  reserva.fecha_hoy as fecha_carga
             from usuario inner join reserva on( usuario.id_usuario = reserva.usuario_res) 
             where reserva.apellido = ?`;
             const [result] = await db.execute(consulta, [apellido]);
-            if (result == "") {
+            if (result.length == 0) {
                 const error = new Error(`El cliente ${apellido} no tiene reservas, o no existe. `);
                 error.statusCode = 404;
                 throw error;
@@ -145,26 +140,22 @@ metodos = {
 
     buscarPorNroTel: async function (numero) {
         try {
-            const consulta = `select reserva.id_reserva, concat (reserva.apellido,", ", reserva.nombre) as nombre_cliente,
-            reserva.fecha_res as fecha_reserva, reserva.nro_tel, reserva.cant_personas , 
-            concat (usuario.apellido,", ", usuario.nombre) as nombre_usuario,  reserva.fecha_hoy as fecha_carga
+            const consulta = `select reserva.id_reserva, reserva.apellido, reserva.nombre, 
+            reserva.fecha_res, reserva.nro_tel, reserva.cant_personas , 
+            usuario.apellido, usuario.nombre,  reserva.fecha_hoy as fecha_carga
             from usuario inner join reserva on( usuario.id_usuario = reserva.usuario_res) where reserva.nro_tel = ?`;
             const [result] = await db.execute(consulta,[numero]);
-            if (result == "") {
+            if (result.length == 0) {
                 const error = new Error(`El número de telefono ${numero} no tiene reservas, o no existe. `);
                 error.statusCode = 404;
                 throw error;
             }
-            console.log(result);
             return { message: 'Exito al listar reservas', detail: result }
         } catch (error) {
             throw new Error('Error al listar reservas: ' + error.message);
         }
     }
-
-
 }
-
 
 module.exports = metodos;
 // model vehiculo se encargara de conectarse a la base de datos y devolver informacion al controller.

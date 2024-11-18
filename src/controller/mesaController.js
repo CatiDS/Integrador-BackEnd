@@ -5,18 +5,17 @@ var model = require('./../model/mesaModel');
 
 
 // ---------------------------------------------------------- 
-// -- rutas de escucha (endpoint) dispoibles para RESERVAS -- 
+// -- rutas de escucha (endpoint) dispoibles -- 
 // ---------------------------------------------------------- 
 router.post('/', crear);
 router.get('/', listarMesas);
 router.put('/:id_mesa', modificar);
-router.delete('/:id_mesa', cancelar);
+router.delete('/:id_mesa', eliminar);
 router.put('/cambiareEstado/disponible/:id_mesa', disponible);
 router.put('/cambiareEstado/noDisponible/:id_mesa', noDisponible);
 router.get('/buscar/:nro_mesa', buscarPorNroMesa);
 router.get('/mesasDisponibles', listarMesasDisponibles);
-
-
+ 
 // ----------------------------------------------------------
 // --------- funciones utilizadas por el router ------------- 
 // ----------------------------------------------------------
@@ -48,10 +47,10 @@ async function modificar(req, res) {
     }
 }
 
-async function cancelar(req, res) {
+async function eliminar(req, res) {
     const id = parseInt(req.params.id_mesa);
     try {
-        const result = await model.cancelarMesa(id);
+        const result = await model.eliminarMesa(id);
           res.status(200).json( { message: result } );
     } catch (error) {
         res.status(500).send({error: error.message});
@@ -99,7 +98,5 @@ async function listarMesasDisponibles(req, res) {
         res.status(500).send(error.message);
     }
 }
-
-
 
 module.exports = router;

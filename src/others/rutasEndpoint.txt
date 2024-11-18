@@ -1,4 +1,5 @@
-RESERVA:*************************************************************************************************************************************
+*************************************************************************************************************************************
+RESERVA:
 MOSTAR TODAS LAS RESERVAS:  get
 http://localhost:8080/reserva/   
 
@@ -89,6 +90,8 @@ recibo del front (req.params.nro_mesa) nro_mesa
 LISTAR MESAS DISPONIBLES: get
 http://localhost:8080/mesa/mesasDisponibles
 
+
+
 *************************************************************************************************************************************
 USUARIO:
 CREAR USUARIO: post
@@ -145,7 +148,92 @@ recibo del front mail, pass   en el body
   "pass": "clave1234"
 }
 
+*******************************************************************************************************************************************
+CUENTA:
+CREAR CUENTA:   post
+http://localhost:8080/cuenta/
+recibo del front (req.body)  body     si no tiene reserva recibo en req.body.reserva = null
+{
+    "reserva": 1,
+    "mesa": 16
+}
 
+LISTAR CUENTAS: get
+http://localhost:8080/cuenta/ 
+
+MODIFICAR CUENTA:   put
+http://localhost:8080/cuenta/:id_cuenta
+recibo del front (req.params.id_cuenta,req.body)  id_cuenta, body   puedo recibir en req.body.reserva = null
+{
+    "reserva": null,
+    "mesa": 19
+}
+
+ELIMINAR CUENTA:    delete
+http://localhost:8080/cuenta/:id_cuenta
+recibo del front (req.params.id_cuenta)      id_cuenta
+
+
+BUSCAR POR NRO DE MESA:     get
+http://localhost:8080/cuenta/buscar/:nro_mesa
+recibo del front (req.params.nro_mesa)   nro_mesa
+
+
+*********************************************************************************************************************************************
+MESA POR CUENTA:
+CREAR:      post
+http://localhost:8080/mesaPorCuenta/
+recibo del front (req.body)  body
+{
+    "cuenta": ,
+    "mesa": 
+}
+
+LISTAR:     get
+http://localhost:8080/mesaPorCuenta/
+
+MODIFICAR:  put
+http://localhost:8080/mesaPorCuenta/:id_mxc
+recibo del front (req.params.id_mxc,req.body)   id_mxc a modificar y el body a modificar
+{
+    "cuenta": 1,
+    "mesa": 1
+}
+
+LISTAR POR NUMERO DE CUENTA: (asociadas a una cuenta)   get
+http://localhost:8080/mesaPorCuenta/nro_cuenta/:cuenta
+recibo del front (req.params.cuenta)  numero de cuenta asociada
+
+ELIMINAR:   delete
+http://localhost:8080/mesaPorCuenta/:id_mxc 
+recibo del front (req.params.id_mxc) id_mxc a eliminar
+
+ELIMINAR POR NUMERO DE CUENTA: (asociadas a una cuenta)     delete
+http://localhost:8080/mesaPorCuenta/eliminar/:cuenta
+recibo del front (req.params.cuenta)     cuenta o nro de cuenta de la cual quiero eliminar las mesas
+
+CAMBIAR EL ESTADO DE LAS MESAS ASOCIADAS A UNA CUENTA (cambiar a disponible): se utiliza al finalizar cuenta     put
+http://localhost:8080/mesaPorCuenta/bajaMesas/:cuenta
+recibo del front (req.params.cuenta)  cuenta,(nro_cuenta=id)
+
+********************************************************************************************************************************************
+PRODUCTO POR CUENTA:
+CREAR:
+
+
+LISTAR:
+
+
+MODIFICAR:
+
+
+ELIMINAR:
+
+
+LISTAR TODOS ASOCIADOS A UNA CUENTA:
+
+
+ELIMINAR TODOS ASOCIADOS A UNA CUENTA:
 
 
 

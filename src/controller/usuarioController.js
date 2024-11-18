@@ -5,12 +5,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { rulesUser, validate, personaRules } = require('../middleware/validations.js');
 
-
-
-
-
 // ----------------------------------------------------------
-// -- Rutas de escucha (endpoint) disponibles para USUARIO --
+// -- Rutas de escucha (endpoint) disponibles --
 // ----------------------------------------------------------
 router.post('/', rulesUser(), personaRules(), validate, crear_usuario);
 router.get('/', listar_usuarios);
@@ -119,7 +115,6 @@ async function login(req, res) {
         res.status(500).send({ message: error.message });
     }
 }
-
 
 module.exports = router;
 

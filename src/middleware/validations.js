@@ -1,15 +1,15 @@
-const { body, check } = require("express-validator");
+const { validationResult, body, check } = require("express-validator");
 
 //separamos las reglas por un lado
 const rulesUser = () => [
     body('mail')
-        .notEmpty().withMessage('el mail no puede estar vacio')
-        .isEmail().withMessage('por favor ingrese un mail valido')
+        .notEmpty().withMessage('El e-mail no puede estar vacio')
+        .isEmail().withMessage('Ingrese un e-mail valido')
         .normalizeEmail(),
     body('pass')
-        .notEmpty().withMessage('la contraseña no puede estar vacia')
+        .notEmpty().withMessage('La contraseña no puede estar vacia')
         .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres')
-        .isLength({ max: 16 }).withMessage('La contraseña debe tener menos 16 caracteres')
+        .isLength({ max: 16 }).withMessage('La contraseña debe tener como máximo 16 caracteres')
 ]
 
 
