@@ -8,11 +8,14 @@ var model = require('./../model/mesaModel');
 // -- rutas de escucha (endpoint) dispoibles para RESERVAS -- 
 // ---------------------------------------------------------- 
 router.post('/', crear);
-router.get('/', mostarTodo);
-router.put('/modificar/:id_mesa', modificar);
-router.delete('/eliminar/:id_mesa', cancelar);
-router.put('/cambiareEstado/:id_mesa', cambiarEstado);
+router.get('/', listarMesas);
+router.put('/:id_mesa', modificar);
+router.delete('/:id_mesa', cancelar);
+router.put('/cambiareEstado/disponible/:id_mesa', disponible);
+router.put('/cambiareEstado/noDisponible/:id_mesa', noDisponible);
 router.get('/buscar/:nro_mesa', buscarPorNroMesa);
+router.get('/mesasDisponibles', listarMesasDisponibles);
+
 
 // ----------------------------------------------------------
 // --------- funciones utilizadas por el router ------------- 
@@ -27,7 +30,7 @@ async function crear(req, res) {
     }
 }
 
-async function mostarTodo(req, res) {
+async function listarMesas(req, res) {
     try {
         const mesas = await model.listarMesas();
         res.status(200).json(mesas);
@@ -55,16 +58,28 @@ async function cancelar(req, res) {
     }
 }
 
-async function cambiarEstado(req, res) {
+async function disponible(req, res) {
     try {
         const id =  parseInt(req.params.id_mesa);
-        const result = await model.cambiarEstado(req.body, id);
+        const result = await model.disponible(id);
         res.status(200).json(result);
         
     } catch (error) {
         res.status(500).send({error: error.message})
     }
 }
+
+async function noDisponible(req, res) {
+    try {
+        const id =  parseInt(req.params.id_mesa);
+        const result = await model.noDisponible(id);
+        res.status(200).json(result);
+        
+    } catch (error) {
+        res.status(500).send({error: error.message})
+    }
+}
+
 
 async function buscarPorNroMesa(req, res) {
     const nro_mesa = parseInt(req.params.nro_mesa)
@@ -75,5 +90,16 @@ async function buscarPorNroMesa(req, res) {
         res.status(500).send(error.message);
     }
 }
+
+async function listarMesasDisponibles(req, res) {
+    try {
+        const mesas = await model.listarMesasDisponibles();
+        res.status(200).json(mesas);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+
 
 module.exports = router;

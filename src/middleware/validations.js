@@ -1,4 +1,4 @@
-const { validationResult, body, check } = require("express-validator");
+const { body, check } = require("express-validator");
 
 //separamos las reglas por un lado
 const rulesUser = () => [

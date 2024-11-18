@@ -74,22 +74,20 @@ ELIMINAR MESA: delete
 http://localhost:8080/mesa/eliminar/:id_mesa
 recibo del front (req.params.id_mesa) id_mesa a eliminar 
 
-CAMBIAR ESTADO DE LA DISPONIBILIDAD:  put
-http://localhost:8080/mesa/cambiareEstado/:id_mesa
-recibo del front (req.body, id) el id_mesa a cambiar y en el req.body.disponible "si" o "no"
+CAMBIAR A DISPONIBLE:  put
+http://localhost:8080/mesa/cambiareEstado/disponible/:id_mesa
+recibo del front (req.params.id_mesa) id_mesa
 
-{
-    "disponible": "si"
-}
+CAMBIAR A NO DISPONIBLE:  put
+http://localhost:8080/mesa/cambiareEstado/noDisponible/:id_mesa
+recibo del front (req.params.id_mesa) id_mesa
 
-BUSCAR POR NUMERO DE MESA:
+BUSCAR POR NUMERO DE MESA: get
 http://localhost:8080/mesa/buscar/:nro_mesa
 recibo del front (req.params.nro_mesa) nro_mesa
 
-
-
-
-
+LISTAR MESAS DISPONIBLES: get
+http://localhost:8080/mesa/mesasDisponibles
 
 *************************************************************************************************************************************
 USUARIO:

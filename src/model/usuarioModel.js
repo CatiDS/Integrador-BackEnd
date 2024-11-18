@@ -28,7 +28,7 @@ const Usuario = {
     },                      //ER_WRONG_VALUE_COUNT_ON_ROW
 
     listar : async () => {
-        const consulta = `select id_usuario, concat (apellido, ", ", nombre) as Nombre_Apellido, mail, nro_tel as Numero_telefono, rol from usuario;`;
+        const consulta = `select id_usuario, apellido, nombre, mail, nro_tel , rol from usuario;`;
         try {
             const [rows] = await db.execute(consulta);
             return rows;

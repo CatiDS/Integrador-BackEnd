@@ -23,8 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 const usuarioController = require('./src/controller/usuarioController');
 const reservaController = require('./src/controller/reservaController');
 const mesaController = require('./src/controller/mesaController');
+const cuentaMesaController = require('./src/controller/cuentaMesaController');
 // const productoController = require('./src/controller/productoController');
-// const cuentaPorMesaController = require('./src/controller/cuentaPorMesaController');
 // const productoPorCuentaController = require('./src/controller/productoPorCuentaController');
 
 
@@ -32,9 +32,9 @@ const mesaController = require('./src/controller/mesaController');
 //redireccionar las distintas peticiones a su correspondiente controlador.
 app.use('/usuario', usuarioController);
 app.use('/reserva', reservaController);
-app.use("/mesa", mesaController); //ejemplo de peticion --> https://localhost:8080/mesa/crear_mesa
+app.use("/mesa", mesaController);
+app.use("/cuentaMesa", cuentaMesaController);
 // app.use("/producto", productoController); //ejemplo de peticion --> https://localhost:8080/producto/listar_productos
-app.use("/cuentaPorMesa", cuentaPorMesaController);
 // app.use("/productoPorCuenta", productoPorCuentaController);
 
 

@@ -29,8 +29,6 @@ metodos = {
         } catch (error) {
             throw new Error('Error al listar mesas: ' + error.message);
         }
-
-        
     },
 
     modificarMesa: async function (id, datos) {
@@ -84,11 +82,10 @@ metodos = {
         }
     },
 
-    cambiarEstado: async function (dato, id) {
+    disponible: async function (id) {
         try {
-            const params = [dato.disponible, id];
-            const consulta = `update mesa set disponible = ? where id_mesa = ?`;
-            const [result] = await db.execute(consulta, params);
+            const consulta = `update mesa set disponible = "si" where id_mesa = ?`;
+            const [result] = await db.execute(consulta, [id]);
             console.log(result.affectedRows);
             console.log(id);
             if (result.affectedRows === 0) {
@@ -103,17 +100,33 @@ metodos = {
             }
             return { message: 'Exito al cambiar la disponibilidad de la mesa', detalle: result };
         } catch (error) {
-            if (error.code === 'WARN_DATA_TRUNCATED') {
-                throw new Error('No se ha modificado la mesa, la disponibilidad debe ser: "si" o "no".' + error.message);
-            } else{
                 throw new Error('No se ha modificado la disponibilidad de la mesa debido a ' + error.message);
+        }
+    },
+
+    noDisponible: async function (id) {
+        try {
+            const consulta = `update mesa set disponible = "no" where nro_mesa = ?`;
+            const [result] = await db.execute(consulta, [id]);
+            if (result.affectedRows === 0) {
+                const error = new Error(`que no se ha encontrado la mesa con el id: ${id} `);
+                error.statusCode = 404;
+                throw error;
             }
+            if (result.changedRows === 0) {
+                const error = new Error(`que no se han cargado cambios en la mesa con id_mesa: ${id} `);
+                error.statusCode = 404;
+                throw error;
+            }
+            return { message: 'Exito al cambiar la disponibilidad de la mesa', detalle: result };
+        } catch (error) {
+                throw new Error('No se ha modificado la disponibilidad de la mesa debido a ' + error.message);
         }
     },
 
     buscarPorNroMesa: async function (id) {
         try {
-            const consulta = `select * from mesa where id_mesa = ? `;
+            const consulta = `select * from mesa where nro_mesa = ? `;
             const [result] = await db.execute(consulta, [id]);
             if (result == "") {
                 const error = new Error(`No existe la mesa: ${id}. `);
@@ -126,6 +139,17 @@ metodos = {
             throw new Error('Error al listar: ' + error.message);
         }
     },
+
+    listarMesasDisponibles: async function () {
+        const consulta = `select * from mesa where disponible = "si"`;
+        try {
+            const [result] = await db.execute(consulta);
+            return { message: 'Exito al listar mesas: ', detail: result }
+        } catch (error) {
+            throw new Error('Error al listar mesas: ' + error.message);
+        }
+
+    }
 
 }
 module.exports = metodos;
