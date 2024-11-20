@@ -219,21 +219,78 @@ recibo del front (req.params.cuenta)  cuenta,(nro_cuenta=id)
 ********************************************************************************************************************************************
 PRODUCTO POR CUENTA:
 CREAR:
+http://localhost:8080/productoPorCuenta/  post
+recibo del front (req.body) body con datos    si no hay observaciones recibo como parametro null
+{
+    "cuenta": ,
+    "producto": ,
+    "cantidad": ,
+    "observaciones": null ,
+    "subtotal": ,
+    "cargado_por": 
+}
 
+LISTAR: get
+http://localhost:8080/productoPorCuenta/
 
-LISTAR:
+MODIFICAR: put
+http://localhost:8080/productoPorCuenta/:id_pxc
+recibo del front (req.params.id_pxc,req.body)   id_pxc a modificar y los datos en body
 
+{
+    "cuenta": ,
+    "producto": ,
+    "cantidad": ,
+    "observaciones": null ,
+    "subtotal": ,
+    "cargado_por": 
+}
 
-MODIFICAR:
+ELIMINAR: delete
+http://localhost:8080/productoPorCuenta/:id_pxc
+recibo del front (eq.params.id_pxc)    id_pxc a eliminar
 
+LISTAR TODOS ASOCIADOS A UNA CUENTA: get
+http://localhost:8080/productoPorCuenta/nro_cuenta/:cuenta
+recibo del front (req.params.cuenta)   numero de cuenta del cual quiero listar todos sus productos
 
-ELIMINAR:
+ELIMINAR TODOS ASOCIADOS A UNA CUENTA: delete
+http://localhost:8080/productoPorCuenta/eliminar/:cuenta
+recibo del front (req.params.cuenta)     numero de cuenta del cual quiero eliminar todos los productos cargados
 
+**********************************************************************************************************************************************
+PRODUCTOS:
+CREAR:   put
+http://localhost:8080/producto/
+recibo del front (req.body)   los datos en body
+{
+    "nombre_prod":"Bocha de helado",
+    "precio": 1500,
+    "categoria": "postres",
+    "stock": null
+}
 
-LISTAR TODOS ASOCIADOS A UNA CUENTA:
+LISTAR:  get
+http://localhost:8080/producto/
 
+MODIFICAR: put
+http://localhost:8080/producto/:id_prod
+recibo del front (req.params.id_prod,req.body) id_prod y body con datos
+{
+    "nombre_prod":"Bocha de helado",
+    "precio": 1500,
+    "categoria": "postres",
+    "stock": null
+}
 
-ELIMINAR TODOS ASOCIADOS A UNA CUENTA:
+ELIMINAR: delete
+http://localhost:8080/producto/:id_prod
+recibo del front (req.params.id_prod)   id_prod del producto a eliminar
+
+LISTAR POR CATEGORIA: get
+http://localhost:8080/producto/categoria/:categoria
+recibo del front (req.params.categoria)  nombre de la categoria
+
 
 
 

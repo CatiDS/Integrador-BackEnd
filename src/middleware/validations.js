@@ -12,6 +12,11 @@ const rulesUser = () => [
         .isLength({ max: 16 }).withMessage('La contraseña debe tener como máximo 16 caracteres')
 ]
 
+const prodControl = () => [
+    check('nombre_prod')
+        .isLength({ min: 3, max: 50 })
+        .withMessage('El nombre del producto debe tener entre 3 y 50 caracteres'),
+]
 
 const personaRules = () => [
     // Validación para nombre (solo letras, mínimo 2 caracteres)
@@ -47,4 +52,4 @@ const validate = (req, res, next) => {
     next();
 }
 
-module.exports = { validate, rulesUser, personaRules };
+module.exports = { validate, rulesUser, personaRules, prodControl };

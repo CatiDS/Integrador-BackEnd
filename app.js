@@ -18,7 +18,7 @@ const reservaController = require('./src/controller/reservaController');
 const mesaController = require('./src/controller/mesaController');
 const cuentaController = require('./src/controller/cuentaController');
 const mesaPorCuentaController = require('./src/controller/mesaPorCuentaController');
-// const productoController = require('./src/controller/productoController');
+const productoController = require('./src/controller/productoController');
 const productoPorCuentaController = require('./src/controller/productoPorCuentaController');
 
 
@@ -29,11 +29,8 @@ app.use('/reserva', reservaController);
 app.use("/mesa", mesaController);
 app.use("/cuenta", cuentaController);
 app.use("/mesaPorCuenta", mesaPorCuentaController);
-
-// app.use("/producto", productoController); //ejemplo de peticion --> https://localhost:8080/producto/listar_productos
+app.use("/producto", productoController);
 app.use("/productoPorCuenta", productoPorCuentaController);
-
-
 
 
 
