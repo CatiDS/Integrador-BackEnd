@@ -1,21 +1,20 @@
 const express = require('express');
 const router = express.Router();
-
 var model = require('./../model/reservaModel');
-
 const { validate, personaRules } = require('../middleware/validations.js');
+const verificarToken = require('./../middleware/verificarToken');
 
 // ---------------------------------------------------------- 
 // -- rutas de escucha (endpoint) dispoibles -- 
 // ---------------------------------------------------------- 
-router.post('/',personaRules(), validate ,crear);
-router.get('/', mostarTodo);
-router.put('/:id_reserva',personaRules(), validate, modificar);
-router.delete('/cancelar/:id_reserva', cancelar);
-router.put('/finalizar/:id_reserva', finalizar);
-router.get('/buscar/:id_usuario', buscarPorIdUsuario);
-router.get('/buscar/apellido/:apellido', buscarPorApellido);
-router.get('/buscar/telefono/:nro_tel', buscarPorNroTel);
+router.post('/', verificarToken ,personaRules(), validate ,crear);
+router.get('/', verificarToken,mostarTodo);
+router.put('/:id_reserva', verificarToken,personaRules(), validate, modificar);
+router.delete('/cancelar/:id_reserva', verificarToken ,cancelar);
+router.put('/finalizar/:id_reserva', verificarToken ,finalizar);
+router.get('/buscar/:id_usuario', verificarToken ,buscarPorIdUsuario);
+router.get('/buscar/apellido/:apellido', verificarToken ,buscarPorApellido);
+router.get('/buscar/telefono/:nro_tel', verificarToken ,buscarPorNroTel);
 
 
 // ----------------------------------------------------------

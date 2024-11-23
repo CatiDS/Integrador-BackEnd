@@ -130,6 +130,10 @@ BUSCAR POR id_usuario: get
 http://localhost:8080/usuario/id/:id_usuario
 recibo del front id_usuario (req.params.id_usuario)
 
+BUSCAR POR APELLIDO: get
+http://localhost:8080/usuario/apellido/:ape
+recibo del front id_usuario (req.params.apellido)
+
 BUSCAR POR MAIL: get
 http://localhost:8080/usuario/mail/:mail
 recibo del front mail  ( req.params.mail)

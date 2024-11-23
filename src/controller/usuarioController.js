@@ -4,17 +4,19 @@ const model = require('../model/usuarioModel.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { rulesUser, validate, personaRules } = require('../middleware/validations.js');
+const verificarToken = require('./../middleware/verificarToken');
 
 // ----------------------------------------------------------
 // -- Rutas de escucha (endpoint) disponibles --
 // ----------------------------------------------------------
 router.post('/', rulesUser(), personaRules(), validate, crear_usuario);
-router.get('/', listar_usuarios);
-router.put('/:id_usuario', rulesUser(), personaRules(), validate, modificar_usuario);
-router.delete('/:id_usuario', eliminar_usuario);
-router.get('/id/:id_usuario', buscarPorIdUsuario);
-router.get('/mail/:mail', buscarPorMail);
-router.put('/rol/:id_usuario', modificarRol);
+router.get('/', verificarToken ,listar_usuarios);          
+router.put('/:id_usuario', verificarToken,rulesUser(), personaRules(), validate, modificar_usuario);  //cada usuario modifica el suyo menos el rol
+router.delete('/:id_usuario', verificarToken ,eliminar_usuario);
+router.get('/id/:id_usuario', verificarToken , buscarPorIdUsuario);
+router.get('/apellido/:apellido', verificarToken , buscarPorApellido);
+router.get('/mail/:mail', verificarToken ,buscarPorMail);
+router.put('/rol/:id_usuario', verificarToken, modificarRol);   // solo puede acceder usuario con rol administrador
 router.post('/login', login);
 
 
@@ -27,7 +29,7 @@ async function crear_usuario(req, res) {
         const nuevo_usuario = await model.crear(req.body);
         res.status(201).json(nuevo_usuario);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(590).json({ error: err.message });
     }
 }
 
@@ -75,7 +77,17 @@ async function buscarPorMail(req, res) {
         const result = await model.buscarPorMail(mail);
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).send(error.message);
+        res.send(error.message);
+    }
+}
+
+async function buscarPorApellido(req, res) {
+    const ape = req.params.apellido;
+    try {
+        const result = await model.buscarPorApellido(ape);
+        res.status(200).json(result);
+    } catch (error) {
+        res.send(error.message);
     }
 }
 
@@ -101,7 +113,7 @@ async function login(req, res) {
                 apellido: result.apellido,
                 mail: result.mail
             }
-            jwt.sign(user, 'ultraMegaSecretPass', { expiresIn: '10000s' }, (err, token) => {
+            jwt.sign(user, 'ParrillaCaserezDoSantos', { expiresIn: '10000s' }, (err, token) => {
                 if (err) {
                     res.status(500).send({ message: err });
                 } else {

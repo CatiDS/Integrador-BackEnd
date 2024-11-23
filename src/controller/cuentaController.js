@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 var model = require('./../model/cuentaModel');
+const verificarToken = require('./../middleware/verificarToken.js');
 
 // ---------------------------------------------------------- 
 // -- rutas de escucha (endpoint) dispoibles-- 
 // ---------------------------------------------------------- 
-router.post('/', crearCuenta);
-router.get('/', listarCuentas);
-router.put('/:id_cuenta', modificarCuenta);
-router.delete('/:id_cuenta', eliminarCuenta);
-router.get('/buscar/:nro_mesa', buscarPorNroMesa);
+router.post('/', verificarToken, crearCuenta);
+router.get('/', verificarToken, listarCuentas);
+router.put('/:id_cuenta', verificarToken, modificarCuenta);
+router.delete('/:id_cuenta', verificarToken, eliminarCuenta);
+router.get('/buscar/:nro_mesa', verificarToken, buscarPorNroMesa);
 
 // ----------------------------------------------------------
 // --------- funciones utilizadas por el router ------------- 

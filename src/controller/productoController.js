@@ -1,19 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
 var model = require('./../model/productoModel');
 const { validate, prodControl } = require('../middleware/validations.js');
+const verificarToken = require('./../middleware/verificarToken');
 
  
 // // // ---------------------------------------------------------- 
 // // // -- rutas de escucha (endpoint) dispoibles -- 
 // // // ---------------------------------------------------------- 
-router.post('/', prodControl(), validate, crear);
-router.get('/', listarTodos);
-router.put('/:id_prod', prodControl(), validate, modificarProd);
-router.delete('/:id_prod', eliminarProd);
-router.get('/categoria/:categoria', listarPorcategoria);
-// router.delete('/eliminar/:cuenta', eliminarTodosDeUnaCuenta);
+router.post('/', verificarToken ,prodControl(), validate, crear);
+router.get('/', verificarToken ,listarTodos);
+router.put('/:id_prod', verificarToken ,prodControl(), validate, modificarProd);
+router.delete('/:id_prod', verificarToken ,eliminarProd);
+router.get('/categoria/:categoria', verificarToken,  listarPorcategoria);
 
 // // // ----------------------------------------------------------
 // // // --------- funciones utilizadas por el router ------------- 

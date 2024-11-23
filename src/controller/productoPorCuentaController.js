@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
-
 var model = require('./../model/productoPorCuentaModel');
-
+const verificarToken = require('./../middleware/verificarToken');
  
 // // ---------------------------------------------------------- 
 // // -- rutas de escucha (endpoint) dispoibles -- 
 // // ---------------------------------------------------------- 
-router.post('/', crear);
-router.get('/', listarTodos);
-router.put('/:id_pxc', modificarProdPorCuenta);
-router.delete('/:id_pxc', eliminarProdPorCuenta);
-router.get('/nro_cuenta/:cuenta', listarPorNroCuenta);
-router.delete('/eliminar/:cuenta', eliminarTodosDeUnaCuenta);
+router.post('/', verificarToken ,crear);
+router.get('/', verificarToken ,listarTodos);
+router.put('/:id_pxc', verificarToken ,modificarProdPorCuenta);
+router.delete('/:id_pxc', verificarToken ,eliminarProdPorCuenta);
+router.get('/nro_cuenta/:cuenta', verificarToken ,listarPorNroCuenta);
+router.delete('/eliminar/:cuenta', verificarToken ,eliminarTodosDeUnaCuenta);
 
 // // ----------------------------------------------------------
 // // --------- funciones utilizadas por el router ------------- 

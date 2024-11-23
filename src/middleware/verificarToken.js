@@ -8,11 +8,12 @@ function verificarToken(req, res, next) {
 
             const token = req.headers["authorization"]
             const verified = jwt.verify(token, 'ParrillaCaserezDoSantos');
+
             if (verified) {
                 next();
             } else {
                 res.status(403).send({
-                    message: "Token invalido, permiso denegado"
+                    message: "Token invalido, permiso denegado" 
                 });
             }
 

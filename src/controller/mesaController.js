@@ -1,20 +1,19 @@
 const express = require('express');
 const router = express.Router();
-
 var model = require('./../model/mesaModel');
-
+const verificarToken = require('./../middleware/verificarToken');
 
 // ---------------------------------------------------------- 
 // -- rutas de escucha (endpoint) dispoibles -- 
 // ---------------------------------------------------------- 
-router.post('/', crear);
-router.get('/', listarMesas);
-router.put('/:id_mesa', modificar);
-router.delete('/:id_mesa', eliminar);
-router.put('/cambiareEstado/disponible/:id_mesa', disponible);
-router.put('/cambiareEstado/noDisponible/:id_mesa', noDisponible);
-router.get('/buscar/:nro_mesa', buscarPorNroMesa);
-router.get('/mesasDisponibles', listarMesasDisponibles);
+router.post('/',verificarToken , crear);
+router.get('/',verificarToken ,listarMesas);
+router.put('/:id_mesa',verificarToken ,modificar);
+router.delete('/:id_mesa',verificarToken ,eliminar);
+router.put('/cambiareEstado/disponible/:id_mesa',verificarToken ,disponible);
+router.put('/cambiareEstado/noDisponible/:id_mesa',verificarToken ,noDisponible);
+router.get('/buscar/:nro_mesa',verificarToken ,buscarPorNroMesa);
+router.get('/mesasDisponibles',verificarToken ,listarMesasDisponibles);
  
 // ----------------------------------------------------------
 // --------- funciones utilizadas por el router ------------- 

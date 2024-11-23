@@ -81,6 +81,20 @@ const Usuario = {
             throw new Error('Error al buscar al usuario: ' + error.message);
         }
     },
+    
+
+    buscarPorApellido: async (ape) => {
+        try {
+            const consulta = `select usuario.apellido, usuario.nombre, usuario.mail, usuario.rol from usuario where apellido = ?`;
+            const [result] = await db.execute(consulta, [ape]);
+            if (result.length == 0) {
+                throw new Error(`Usuario no encontrado con el apellido: ${ape}`);
+            }
+            return { message: `Exito al buscar al usuario: ${ape}`, detail: result };
+        } catch (error) {
+            throw new Error('Error al buscar al usuario:' + error.message);
+        }
+    },
 
   
     buscarPorMail: async (mail) => {

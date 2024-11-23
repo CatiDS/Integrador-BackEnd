@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
-
 var model = require('./../model/mesaPorCuentaModel');
+const verificarToken = require('./../middleware/verificarToken');
 
 
 // // ---------------------------------------------------------- 
 // // -- rutas de escucha (endpoint) dispoibles -- 
 // // ---------------------------------------------------------- 
-router.post('/',  crearMesaPorCuenta);
-router.get('/', listarTodas);
-router.put('/:id_mxc', modificarMesaPorCuenta);
-router.get('/nro_cuenta/:cuenta', buscarPorNroCta);
-router.delete('/:id_mxc', eliminarMesaPorCuenta);
-router.delete('/eliminar/:cuenta', eliminarMesasAsociadas); //eliminar todas las mesas asociadas a una cuenta (al aeliminar cuenta)
-router.put('/bajaMesas/:cuenta', cambiarEstadoDisp);
+router.post('/', verificarToken, crearMesaPorCuenta);
+router.get('/',verificarToken ,listarTodas);
+router.put('/:id_mxc',verificarToken ,modificarMesaPorCuenta);
+router.get('/nro_cuenta/:cuenta',verificarToken ,buscarPorNroCta);
+router.delete('/:id_mxc',verificarToken ,eliminarMesaPorCuenta);
+router.delete('/eliminar/:cuenta',verificarToken ,eliminarMesasAsociadas); //eliminar todas las mesas asociadas a una cuenta (al eliminar cuenta)
+router.put('/bajaMesas/:cuenta',verificarToken ,cambiarEstadoDisp);
 
 // // ----------------------------------------------------------
 // // --------- funciones utilizadas por el router ------------- 
