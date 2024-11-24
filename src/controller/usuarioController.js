@@ -109,7 +109,7 @@ async function login(req, res) {
         const iguales = bcrypt.compareSync(pass, result.pass);
         if (iguales) {
             let user = {
-                id:id_usuario,
+                id:result.id_usuario,
                 nombre: result.nombre,
                 apellido: result.apellido,
                 mail: result.mail,
