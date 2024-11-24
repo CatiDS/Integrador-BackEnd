@@ -109,11 +109,14 @@ async function login(req, res) {
         const iguales = bcrypt.compareSync(pass, result.pass);
         if (iguales) {
             let user = {
+                id:id_usuario,
                 nombre: result.nombre,
                 apellido: result.apellido,
-                mail: result.mail
+                mail: result.mail,
+                rol:result.rol,
+
             }
-            jwt.sign(user, 'ParrillaCaserezDoSantos', { expiresIn: '10000s' }, (err, token) => {
+            jwt.sign(user, 'ParrillaCaserezDoSantos', { expiresIn: '5h' }, (err, token) => {
                 if (err) {
                     res.status(500).send({ message: err });
                 } else {

@@ -67,8 +67,7 @@ const Usuario = {
 
     buscarPorId: async function (id) {
         try {
-            const consulta = `select concat (apellido, ", ", nombre) as Nombre_Apellido, mail,
-             nro_tel as Numero_telefono, rol from usuario where id_usuario = ?`;
+            const consulta = `select id_usuario, apellido, nombre, mail, nro_tel, rol from usuario where id_usuario = ?`;
             const [result] = await db.execute(consulta, [id]);
             if (result == "") {
                 const error = new Error(`El usuario con el id: ${id} no existe. `);
@@ -76,7 +75,8 @@ const Usuario = {
                 throw error;
             }
             console.log(result);
-            return { message: `Exito al buscar al usuario: ${id}`, detail: result }
+            // return { message: `Exito al buscar al usuario: ${id}`, detail: result }
+            return result; //si no saltó el error en el if anterior entoces se devuelve el resultado
         } catch (error) {
             throw new Error('Error al buscar al usuario: ' + error.message);
         }
@@ -85,12 +85,13 @@ const Usuario = {
 
     buscarPorApellido: async (ape) => {
         try {
-            const consulta = `select usuario.apellido, usuario.nombre, usuario.mail, usuario.rol from usuario where apellido = ?`;
+            const consulta = `select id_usuario, apellido, nombre, mail, nro_tel, rol from usuario where apellido = ?`;
             const [result] = await db.execute(consulta, [ape]);
             if (result.length == 0) {
                 throw new Error(`Usuario no encontrado con el apellido: ${ape}`);
             }
-            return { message: `Exito al buscar al usuario: ${ape}`, detail: result };
+            // return { message: `Exito al buscar al usuario: ${ape}`, detail: result };
+            return result; //si no saltó el error en el if anterior entoces se devuelve el resultado
         } catch (error) {
             throw new Error('Error al buscar al usuario:' + error.message);
         }

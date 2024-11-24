@@ -12,13 +12,13 @@ function verificarToken(req, res, next) {
             if (verified) {
                 next();
             } else {
-                res.status(403).send({
+                res.status(401).redirect.send({
                     message: "Token invalido, permiso denegado" 
                 });
             }
 
         } catch (error) {
-            res.status(403).send({
+            res.status(401).send({
                 message: "Acceso Denegado"
             });
         }
