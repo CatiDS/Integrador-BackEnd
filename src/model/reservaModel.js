@@ -30,7 +30,8 @@ metodos = {
             usuario.apellido, usuario.nombre, reserva.fecha_hoy as fecha_carga
             from usuario inner join reserva on( usuario.id_usuario = reserva.usuario_res);`
             const [result] = await db.execute(consulta);
-            return { message: 'Exito al listar reservas', detail: result }
+            // return { message: 'Exito al listar reservas', detail: result }
+            return result;
         } catch (error) {
             throw new Error('Error al listar reservas: ' + error.message);
         }
@@ -53,6 +54,7 @@ metodos = {
                 throw error;
             }
             return { message: 'Exito al modificar reserva', detalle: result };
+            
         } catch (error) {
             if (error.code === 'ER_WRONG_ARGUMENTS') {
                 throw new Error('No se ha modificado la reserva. La columna no puede ser nula: ' + error.code);
@@ -113,7 +115,8 @@ metodos = {
                 error.statusCode = 404;
                 throw error;
             }
-            return { message: `Exito al listar reservas del usuario: ${id}`, detail: result }
+            return result;
+            // return { message: `Exito al listar reservas del usuario: ${id}`, detail: result }
         } catch (error) {
             throw new Error('Error al listar reservas: ' + error.message);
         }
@@ -132,7 +135,8 @@ metodos = {
                 error.statusCode = 404;
                 throw error;
             }
-            return { message: 'Exito al listar reservas', detail: result }
+            return result;
+            // return { message: 'Exito al listar reservas', detail: result }
         } catch (error) {
             throw new Error('Error al listar reservas: ' + error.message);
         }
@@ -150,7 +154,8 @@ metodos = {
                 error.statusCode = 404;
                 throw error;
             }
-            return { message: 'Exito al listar reservas', detail: result }
+            return result;
+            // return { message: 'Exito al listar reservas', detail: result }
         } catch (error) {
             throw new Error('Error al listar reservas: ' + error.message);
         }
